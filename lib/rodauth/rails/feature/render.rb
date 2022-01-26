@@ -9,16 +9,18 @@ module Rodauth
         # Renders templates with layout. First tries to render a user-defined
         # template, otherwise falls back to Rodauth's template.
         def view(page, *)
-          rails_render(action: page.tr("-", "_"), layout: true) ||
-            rails_render(html: super.html_safe, layout: true)
+          #rails_render(action: page.tr("-", "_"), layout: true) ||
+          rails_controller_instance.custom_log("Berlimioz#rodauth-rails#view => render only the default page")
+          rails_render(html: super.html_safe, layout: true)
         end
 
         # Renders templates without layout. First tries to render a user-defined
         # template or partial, otherwise falls back to Rodauth's template.
         def render(page)
+          rails_controller_instance.custom_log("------> YOOOOOO Berlimioz#rodauth-rails#RENDER => render only the default page")
           rails_render(partial: page.tr("-", "_"), layout: false) ||
             rails_render(action: page.tr("-", "_"), layout: false) ||
-            super.html_safe
+          super.html_safe
         end
 
         def button(*)
